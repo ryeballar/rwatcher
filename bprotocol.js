@@ -22,6 +22,8 @@ class BProtocol extends require('stream').Readable {
 
 				value = value.join(' ');
 
+			} else {
+				value = value.replace(/\s+/g, '\\ ');
 			}
 
 			commands.push([
