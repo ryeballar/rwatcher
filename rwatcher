@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# List of directory commands for `ls`
+declare -A COMMANDS=()
+
+# List of shas for command directory
+declare -A SHAS=()
+
+# Split paramters by "," delimiter
+IFS="," read -r -a PARAMETERS <<< $1
+
+# Has interval parameter?
+if [ -z $2 ]; then
+	# If not then set default as 1
+	INTERVAL=1
+else
+	# if yes then set it as the interval
+	INTERVAL=$2
+fi
+
+# loop through the delimited params
+for key in ${!PARAMETERS[@]}; do
+
+	# parameter value
+	parameter=${PARAMETERS[$key]}
+
+	# split each command directory by their named counter parts
+	IFS=":" read -r -a CMDS <<< $parameter
+
+	# Associate key value from their command directory and their globbing counter parts
+	COMMANDS[${CMDS[0]}]=${CMDS[1]}
+
+	# Hash for each command directories
+	SHAS[${CMDS[0]}]=""
+
+done
+
+# set glob start file pattern expansion
+shopt -s globstar
+
+# Infinite loop
+while true; do
+
+	# loop throught each command directories
+	for key in ${!COMMANDS[@]}; do
+
+		# get glob
+		curr_glob=${COMMANDS[$key]}
+
+		# get current sha for this command directory
+		curr_sha=${SHAS[$key]}
+
+		# generate the latest command directory's sha
+		sha=$(eval ls -gGR --full-time $curr_glob | sha1sum)
+
+		# is this not the latest sha?
+		if [[ $sha != $curr_sha && $curr_sha != "" ]]; then
+
+			# if not then simple echo the command diretory name
+			echo -n $key
+
+		fi
+
+		# assign the latest sha
+		SHAS[$key]=$sha
+
+	done
+
+	echo -n "."
+
+	# sleep by interval
+	sleep $INTERVAL
+
+done
