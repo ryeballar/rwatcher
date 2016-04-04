@@ -66,8 +66,6 @@ while true; do
 
 	done
 
-	echo -n "."
-
 	# sleep by interval
 	sleep $INTERVAL
 
