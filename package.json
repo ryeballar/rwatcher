@@ -1,5 +1,5 @@
 {
-  "name": "bwatcher",
+  "name": "rwatcher",
   "version": "1.0.0",
   "description": "basic watcher for any file that changes in a set of directories",
   "main": "index.js",
