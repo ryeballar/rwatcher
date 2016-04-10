@@ -33,7 +33,7 @@ class BProtocol extends require('stream').Readable {
 
 		}
 
-		this._source = source = spawn(__dirname + '/rwatcher', [commands.join(','), 0.1]).stdout;
+		this._source = source = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]).stdout;
 
 		source.on('end', () => this.push(null));
 		source.on('readable', () => this.read(0));

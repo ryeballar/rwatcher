@@ -7,7 +7,7 @@ declare -A COMMANDS=()
 declare -A SHAS=()
 
 # Split paramters by "," delimiter
-IFS="," read -r -a PARAMETERS <<< $1
+IFS=";" read -r -a PARAMETERS <<< $1
 
 # Has interval parameter?
 if [ -z $2 ]; then
