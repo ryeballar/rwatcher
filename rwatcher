@@ -35,7 +35,7 @@ for key in ${!PARAMETERS[@]}; do
 
 done
 
-# set glob start file pattern expansion
+# set glob star file pattern expansion
 shopt -s globstar
 
 # Infinite loop
@@ -51,7 +51,7 @@ while true; do
 		curr_sha=${SHAS[$key]}
 
 		# generate the latest command directory's sha
-		sha=$(eval ls -gGR --full-time $curr_glob | sha1sum)
+		sha=$(eval stat $curr_glob --printf="%Y" | sha1sum)
 
 		# is this not the latest sha?
 		if [[ $sha != $curr_sha && $curr_sha != "" ]]; then
