@@ -10,6 +10,7 @@ class BProtocol extends require('stream').Readable {
 		super(options);
 
 		var commands=[];
+		var rwatcher;
 
 		for(let key in source) {
 
@@ -34,13 +35,14 @@ class BProtocol extends require('stream').Readable {
 
 		}
 
-		this._source = source = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]).stdout;
+		rwatcher = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]);
+		this._source = source = rwatcher.stdout;
 
 		source.on('end', () => this.push(null));
 		source.on('readable', () => this.read(0));
 
 		onDeath((signal, err) => {
-			source.kill();
+			rwatcher.kill();
 		});
 
 	}
