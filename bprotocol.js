@@ -1,7 +1,9 @@
 'use strict';
 
 const spawn = require('child_process').spawn;
-const onDeath = require('death');
+const onDeath = require('death')({
+	uncaughtException: true
+});
 
 class BProtocol extends require('stream').Readable {
 
@@ -43,6 +45,7 @@ class BProtocol extends require('stream').Readable {
 
 		onDeath((signal, err) => {
 			rwatcher.kill();
+			process.exit();
 		});
 
 	}
