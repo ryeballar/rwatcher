@@ -51,7 +51,7 @@ while true; do
 		curr_sha=${SHAS[$key]}
 
 		# generate the latest command directory's sha
-		sha=`stat $curr_glob --printf="%Y" | sha1sum`
+		sha=`eval stat "$curr_glob" --printf="%Y" | sha1sum`
 
 		# is this not the latest sha?
 		if [[ $sha != $curr_sha && $curr_sha != "" ]]; then
