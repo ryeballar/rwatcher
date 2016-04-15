@@ -1,6 +1,7 @@
 'use strict';
 
-var spawn = require('child_process').spawn;
+const spawn = require('child_process').spawn;
+const onDeath = require('death');
 
 class BProtocol extends require('stream').Readable {
 
@@ -37,6 +38,10 @@ class BProtocol extends require('stream').Readable {
 
 		source.on('end', () => this.push(null));
 		source.on('readable', () => this.read(0));
+
+		onDeath((signal, err) => {
+			source.kill();
+		});
 
 	}
 
