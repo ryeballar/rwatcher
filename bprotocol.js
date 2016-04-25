@@ -43,7 +43,7 @@ class BProtocol extends require('stream').Readable {
 		source.on('end', () => this.push(null));
 		source.on('readable', () => this.read(0));
 
-		onDeath(() => this.kill);
+		onDeath(() => this.kill());
 
 	}
 
