@@ -37,16 +37,13 @@ class BProtocol extends require('stream').Readable {
 
 		}
 
-		rwatcher = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]);
+		this._rwatcher = rwatcher = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]);
 		this._source = source = rwatcher.stdout;
 
 		source.on('end', () => this.push(null));
 		source.on('readable', () => this.read(0));
 
-		onDeath((signal, err) => {
-			rwatcher.kill();
-			process.exit();
-		});
+		onDeath(() => this.kill);
 
 	}
 
@@ -62,6 +59,11 @@ class BProtocol extends require('stream').Readable {
 
 		this.push(chunk);
 
+	}
+
+	kill() {
+		this._rwatcher.kill();
+		process.exit();
 	}
 
 }
