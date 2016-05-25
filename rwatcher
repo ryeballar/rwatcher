@@ -13,7 +13,6 @@ IFS=";" read -r -a PARAMETERS <<< $1
 if [ -z $2 ]; then
 	# If not then set default as 1
 	INTERVAL=1
-else # if yes then set it as the interval INTERVAL=$2
 fi
 
 # loop through the delimited params
