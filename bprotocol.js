@@ -3,7 +3,8 @@
 const spawn = require('child_process').spawn;
 const onDeath = require('death')({
 	uncaughtException: true,
-	SIGINT: false
+	SIGINT: false,
+	SIGTERM: false
 });
 
 class BProtocol extends require('stream').Readable {
