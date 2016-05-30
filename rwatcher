@@ -33,7 +33,7 @@ for key in ${!PARAMETERS[@]}; do
 done
 
 # set glob star file pattern expansion
-shopt -s globstar
+shopt -s globstar extglob
 
 # Infinite loop
 while true; do
