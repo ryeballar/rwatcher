@@ -2,6 +2,6 @@
 
 var BProtocol = require('./bprotocol');
 
-module.exports= (options) => {
-	return new BProtocol(options);
+module.exports= (source, options) => {
+	return new BProtocol(source, options);
 };

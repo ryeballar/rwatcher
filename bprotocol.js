@@ -11,6 +11,11 @@ class BProtocol extends require('stream').Readable {
 
 	constructor(source, options) {
 
+		options = options || {};
+
+		var delay = options.delay;
+		delete options.delay;
+
 		super(options);
 
 		var commands=[];
@@ -39,7 +44,7 @@ class BProtocol extends require('stream').Readable {
 
 		}
 
-		this._rwatcher = rwatcher = spawn(__dirname + '/rwatcher', [commands.join(';'), 0.1]);
+		this._rwatcher = rwatcher = spawn(__dirname + '/rwatcher', [commands.join(';'), delay || 0.1]);
 		this._source = source = rwatcher.stdout;
 
 		source.on('end', () => this.push(null));
